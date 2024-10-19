@@ -1,38 +1,35 @@
-﻿using System;
+﻿using SpeexDSPSharp.Core.SafeHandlers;
+using System;
 using System.Runtime.InteropServices;
 
 namespace SpeexDSPSharp.Core
 {
     public static class NativeHandler
     {
-        [DllImportAttribute("libspeexdsp-1.dll")]
-        public static extern IntPtr speex_echo_state_init(int frameSize, int filterLength);
+        const string DllName = "libspeexdsp-1.dll";
+        //Jitter Buffer
+        [DllImportAttribute(DllName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern SpeexJitterBufferSafeHandler jitter_buffer_init(int tick);
 
-        [DllImportAttribute("libspeexdsp-1.dll")]
-        public static extern void speex_echo_state_destroy(IntPtr st);
+        [DllImportAttribute(DllName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void jitter_buffer_reset(SpeexJitterBufferSafeHandler jitter);
 
-        [DllImportAttribute("libspeexdsp-1.dll")]
-        public static extern void speex_echo_cancellation(IntPtr st, IntPtr recorded, IntPtr played, IntPtr echoRemoved);
+        [DllImportAttribute(DllName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void jitter_buffer_destroy(IntPtr jitter);
 
-        [DllImportAttribute("libspeexdsp-1.dll")]
-        public static extern void speex_echo_playback(IntPtr st, IntPtr played);
+        [DllImportAttribute(DllName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void jitter_buffer_put(SpeexJitterBufferSafeHandler jitter, IntPtr packet);
 
-        [DllImportAttribute("libspeexdsp-1.dll")]
-        public static extern void speex_echo_capture(IntPtr st, IntPtr recorded, IntPtr echoRemoved);
+        [DllImportAttribute(DllName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int jitter_buffer_get(SpeexJitterBufferSafeHandler jitter, IntPtr packet, ref int start_offset);
 
-        [DllImportAttribute("libspeexdsp-1.dll")]
-        public unsafe static extern int speex_echo_ctl(IntPtr st, int id, ref IntPtr val);
+        [DllImportAttribute(DllName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int jitter_buffer_get_pointer_timestamp(SpeexJitterBufferSafeHandler jitter);
 
-        [DllImportAttribute("libspeexdsp-1.dll")]
-        public static extern IntPtr speex_preprocess_state_init(int frameSize, int sampleRate);
+        [DllImportAttribute(DllName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void jitter_buffer_tick(SpeexJitterBufferSafeHandler jitter);
 
-        [DllImportAttribute("libspeexdsp-1.dll")]
-        public static extern int speex_preprocess_ctl(IntPtr st, int id, IntPtr val);
-
-        [DllImportAttribute("libspeexdsp-1.dll")]
-        public static extern int speex_preprocess_run(IntPtr st, IntPtr recorded);
-
-        [DllImportAttribute("libspeexdsp-1.dll")]
-        public static extern void speex_preprocess_state_destroy(IntPtr st);
+        [DllImportAttribute(DllName, CallingConvention = CallingConvention.Cdecl)]
+        public static unsafe extern int jitter_buffer_ctl(SpeexJitterBufferSafeHandler jitter, int request, void* ptr);
     }
 }
