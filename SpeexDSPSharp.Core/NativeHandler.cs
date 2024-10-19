@@ -7,7 +7,7 @@ namespace SpeexDSPSharp.Core
     public static class NativeHandler
     {
         const string DllName = "libspeexdsp-1.dll";
-        //Jitter Buffer
+        //Jitter Buffer, Cannot figure out how this works so I'm just not gonna use it. Tends to freeze the application.
         [DllImportAttribute(DllName, CallingConvention = CallingConvention.Cdecl)]
         public static extern SpeexJitterBufferSafeHandler jitter_buffer_init(int tick);
 
