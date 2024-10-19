@@ -26,13 +26,13 @@ namespace SpeexDSPSharp.Core
             NativeHandler.jitter_buffer_put(_handler, packetPtr);
         }
 
-        public int Get(ref SpeexJitterBufferPacket packet, int desired_span, ref int? start_offset)
+        public unsafe int Get(ref SpeexJitterBufferPacket packet, int desired_span, ref int start_offset)
         {
             IntPtr packetPtr = Marshal.AllocHGlobal(Marshal.SizeOf(packet));
             Marshal.StructureToPtr(packet, packetPtr, true);
 
             start_offset = 0;
-            var result = NativeHandler.jitter_buffer_get(_handler, packetPtr, desired_span, ref start_offset);
+            var result = NativeHandler.jitter_buffer_get(_handler, packetPtr, desired_span, (int*)start_offset);
             CheckError(result);
             return result;
         }
@@ -47,12 +47,12 @@ namespace SpeexDSPSharp.Core
             return result;
         }
 
-        public int UpdateDelay(ref SpeexJitterBufferPacket packet, ref int? start_offset)
+        public unsafe int UpdateDelay(ref SpeexJitterBufferPacket packet, ref int start_offset)
         {
             IntPtr packetPtr = Marshal.AllocHGlobal(Marshal.SizeOf(packet));
             Marshal.StructureToPtr(packet, packetPtr, true);
 
-            var result = NativeHandler.jitter_buffer_update_delay(_handler, packetPtr, ref start_offset);
+            var result = NativeHandler.jitter_buffer_update_delay(_handler, packetPtr, (int*)start_offset);
             CheckError(result);
             return result;
         }
