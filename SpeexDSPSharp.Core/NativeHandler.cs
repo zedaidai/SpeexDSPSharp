@@ -1,4 +1,5 @@
 ﻿using SpeexDSPSharp.Core.SafeHandlers;
+using SpeexDSPSharp.Core.Structures;
 using System;
 using System.Runtime.InteropServices;
 
@@ -18,16 +19,16 @@ namespace SpeexDSPSharp.Core
         public static extern void jitter_buffer_destroy(IntPtr jitter);
 
         [DllImportAttribute(DllName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void jitter_buffer_put(SpeexJitterBufferSafeHandler jitter, IntPtr packet);
+        public static extern void jitter_buffer_put(SpeexJitterBufferSafeHandler jitter, ref SpeexJitterBufferPacket packet);
 
         [DllImportAttribute(DllName, CallingConvention = CallingConvention.Cdecl)]
-        public static unsafe extern int jitter_buffer_get(SpeexJitterBufferSafeHandler jitter, IntPtr packet, int desired_span, int* start_offset);
+        public static unsafe extern int jitter_buffer_get(SpeexJitterBufferSafeHandler jitter, ref SpeexJitterBufferPacket packet, int desired_span, int* start_offset);
 
         [DllImportAttribute(DllName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int jitter_buffer_get_another(SpeexJitterBufferSafeHandler jitter, IntPtr packet);
+        public static extern int jitter_buffer_get_another(SpeexJitterBufferSafeHandler jitter, ref SpeexJitterBufferPacket packet);
 
         [DllImportAttribute(DllName, CallingConvention = CallingConvention.Cdecl)]
-        public static unsafe extern int jitter_buffer_update_delay(SpeexJitterBufferSafeHandler jitter, IntPtr packet, int* start_offset);
+        public static unsafe extern int jitter_buffer_update_delay(SpeexJitterBufferSafeHandler jitter, ref SpeexJitterBufferPacket packet, int* start_offset);
 
         [DllImportAttribute(DllName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int jitter_buffer_get_pointer_timestamp(SpeexJitterBufferSafeHandler jitter);

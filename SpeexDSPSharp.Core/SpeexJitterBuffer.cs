@@ -1,7 +1,5 @@
 ﻿using SpeexDSPSharp.Core.SafeHandlers;
 using SpeexDSPSharp.Core.Structures;
-using System;
-using System.Runtime.InteropServices;
 
 namespace SpeexDSPSharp.Core
 {
@@ -19,40 +17,29 @@ namespace SpeexDSPSharp.Core
             NativeHandler.jitter_buffer_reset(_handler);
         }
 
-        public void Put(SpeexJitterBufferPacket packet)
+        public void Put(ref SpeexJitterBufferPacket packet)
         {
-            IntPtr packetPtr = Marshal.AllocHGlobal(Marshal.SizeOf(packet));
-            Marshal.StructureToPtr(packet, packetPtr, true);
-            NativeHandler.jitter_buffer_put(_handler, packetPtr);
+            NativeHandler.jitter_buffer_put(_handler, ref packet);
         }
 
         public unsafe int Get(ref SpeexJitterBufferPacket packet, int desired_span, ref int start_offset)
         {
-            IntPtr packetPtr = Marshal.AllocHGlobal(Marshal.SizeOf(packet));
-            Marshal.StructureToPtr(packet, packetPtr, true);
-
             start_offset = 0;
-            var result = NativeHandler.jitter_buffer_get(_handler, packetPtr, desired_span, (int*)start_offset);
+            var result = NativeHandler.jitter_buffer_get(_handler, ref packet, desired_span, (int*)start_offset);
             CheckError(result);
             return result;
         }
 
         public int GetAnother(ref SpeexJitterBufferPacket packet)
         {
-            IntPtr packetPtr = Marshal.AllocHGlobal(Marshal.SizeOf(packet));
-            Marshal.StructureToPtr(packet, packetPtr, true);
-
-            var result = NativeHandler.jitter_buffer_get_another(_handler, packetPtr);
+            var result = NativeHandler.jitter_buffer_get_another(_handler, ref packet);
             CheckError(result);
             return result;
         }
 
         public unsafe int UpdateDelay(ref SpeexJitterBufferPacket packet, ref int start_offset)
         {
-            IntPtr packetPtr = Marshal.AllocHGlobal(Marshal.SizeOf(packet));
-            Marshal.StructureToPtr(packet, packetPtr, true);
-
-            var result = NativeHandler.jitter_buffer_update_delay(_handler, packetPtr, (int*)start_offset);
+            var result = NativeHandler.jitter_buffer_update_delay(_handler, ref packet, (int*)start_offset);
             CheckError(result);
             return result;
         }
