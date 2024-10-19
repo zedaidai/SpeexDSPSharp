@@ -7,8 +7,18 @@ namespace SpeexDSPSharp.Core
 {
     public static class NativeHandler
     {
-        const string DllName = "libspeexdsp-1.dll";
-        //Jitter Buffer, Cannot figure out how this works so I'm just not gonna use it. Tends to freeze the application.
+#if ANDROID
+        private const string DllName = "libspeexdsp.so";
+#elif LINUX
+        private const string DllName = "libspeexdsp.so.1.5.2";
+#elif WINDOWS
+        private const string DllName = "libspeexdsp-1.dll";
+#elif MACOS || IOS || MACCATALYST
+        private const string DllName = "__Internal__";
+#else
+        private const string DllName = "libspeexdsp";
+#endif
+        //Jitter Buffer
         [DllImportAttribute(DllName, CallingConvention = CallingConvention.Cdecl)]
         public static extern SpeexJitterBufferSafeHandler jitter_buffer_init(int step_size);
 
