@@ -1,21 +1,36 @@
-﻿using SpeexDSPSharp.Core;
-using SpeexDSPSharp.Core.Structures;
+﻿using NAudio.Wave;
+using Tester;
 
-try
+var format = new WaveFormat(48000, 1);
+var buffer = new BufferedWaveProvider(format) { ReadFully = true };
+var echo = new EchoCancellationWaveProvider(20, 100, buffer);
+var recorder = new WaveInEvent()
 {
-    var buffer = new SpeexJitterBuffer(1);
-    var packet = new SpeexJitterBufferPacket() { data = new byte[960], len = 960, span = 20, timestamp = 0 };
-    packet.data[0] = 1;
-
-    buffer.Put(ref packet);
-
-    var start_offset = 0;
-    packet.timestamp = 1;
-    buffer.Get(ref packet, 20, ref start_offset);
-    Console.WriteLine(packet.data[0]);
-    Console.ReadLine();
-}
-catch (Exception ex)
+    WaveFormat = format,
+    BufferMilliseconds = 20
+};
+var output = new WaveOutEvent()
 {
-    Console.WriteLine(ex);
+    DesiredLatency = 100
+};
+
+recorder.DataAvailable += Recorder_DataAvailable;
+
+output.Init(echo);
+output.Play();
+recorder.StartRecording();
+
+void Recorder_DataAvailable(object? sender, WaveInEventArgs e)
+{
+    try
+    {
+        echo.Cancel(e.Buffer);
+        buffer.AddSamples(e.Buffer, 0, e.BytesRecorded);
+    }
+    catch(Exception ex)
+    {
+        Console.WriteLine(ex);
+    }
 }
+
+Console.ReadLine();
