@@ -24,6 +24,26 @@ namespace SpeexDSPSharp.Core
             GC.SuppressFinalize(this);
         }
 
+        public unsafe int Run(short[] x)
+        {
+            ThrowIfDisposed();
+            fixed (short* xPtr = x)
+            {
+                var result = NativeHandler.speex_preprocess_run(_handler, xPtr);
+                CheckError(result);
+                return result;
+            }
+        }
+
+        public unsafe void EstimateUpdate(short[] x)
+        {
+            ThrowIfDisposed();
+            fixed (short* xPtr = x)
+            {
+                NativeHandler.speex_preprocess_estimate_update(_handler, xPtr);
+            }
+        }
+
         public unsafe int Ctl<T>(EchoCancellationCtl request, ref T value) where T : unmanaged
         {
             ThrowIfDisposed();
