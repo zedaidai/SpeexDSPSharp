@@ -26,7 +26,7 @@ namespace Tester
             int samplesRead = _source.Read(buffer, offset, count);
             var shortBuffer = new short[buffer.Length / 2];
 
-            Buffer.BlockCopy(buffer, 0, shortBuffer, 0, samplesRead);
+            Buffer.BlockCopy(buffer, 0, shortBuffer, 0, buffer.Length);
             _canceller.EchoPlayback(shortBuffer);
             return samplesRead;
         }
@@ -37,7 +37,7 @@ namespace Tester
             Buffer.BlockCopy(buffer, 0, shortBuffer, 0, buffer.Length);
             _canceller.EchoCapture(shortBuffer, out var output);
 
-            Buffer.BlockCopy(output, 0, buffer, 0, output.Length);
+            Buffer.BlockCopy(output, 0, buffer, 0, output.Length * 2);
         }
     }
 }

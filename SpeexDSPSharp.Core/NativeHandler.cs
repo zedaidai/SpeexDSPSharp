@@ -50,7 +50,7 @@ namespace SpeexDSPSharp.Core
         public static extern void jitter_buffer_remaining_span(SpeexJitterBufferSafeHandler jitter, int rem);
 
         [DllImportAttribute(DllName, CallingConvention = CallingConvention.Cdecl)]
-        public static unsafe extern int jitter_buffer_ctl(SpeexJitterBufferSafeHandler jitter, int request, ref int value);
+        public static unsafe extern int jitter_buffer_ctl(SpeexJitterBufferSafeHandler jitter, int request, void* ptr);
 
 
         //Echo Cancellation
@@ -76,7 +76,7 @@ namespace SpeexDSPSharp.Core
         public static unsafe extern void speex_echo_state_reset(SpeexEchoStateSafeHandler st);
 
         [DllImportAttribute(DllName, CallingConvention = CallingConvention.Cdecl)]
-        public static unsafe extern int speex_echo_ctl(SpeexEchoStateSafeHandler st, int request, ref int value);
+        public static unsafe extern int speex_echo_ctl(SpeexEchoStateSafeHandler st, int request, void* ptr);
 
 
         //Preprocessor
@@ -93,6 +93,6 @@ namespace SpeexDSPSharp.Core
         public static unsafe extern void speex_preprocess_estimate_update(SpeexPreprocessStateSafeHandler st, short* x);
 
         [DllImportAttribute(DllName, CallingConvention = CallingConvention.Cdecl)]
-        public static unsafe extern int speex_preprocess_ctl(SpeexPreprocessStateSafeHandler st, int request, ref int value);
+        public static unsafe extern int speex_preprocess_ctl(SpeexPreprocessStateSafeHandler st, int request, void* ptr);
     }
 }

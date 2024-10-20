@@ -69,12 +69,15 @@ namespace SpeexDSPSharp.Core
             }
         }
 
-        public unsafe int Ctl(EchoCancellationCtl request, ref int value)
+        public unsafe int Ctl<T>(EchoCancellationCtl request, ref T value) where T : unmanaged
         {
             ThrowIfDisposed();
-            var result = NativeHandler.speex_echo_ctl(_handler, (int)request, ref value);
-            CheckError(result);
-            return result;
+            fixed (void* valuePtr = &value)
+            {
+                var result = NativeHandler.speex_echo_ctl(_handler, (int)request, valuePtr);
+                CheckError(result);
+                return result;
+            }
         }
 
         protected virtual void Dispose(bool disposing)
