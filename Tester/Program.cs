@@ -17,6 +17,8 @@ var output = new WaveOutEvent()
 recorder.DataAvailable += Recorder_DataAvailable;
 
 output.Init(echo);
+
+Task.Delay(500).Wait();
 output.Play();
 recorder.StartRecording();
 

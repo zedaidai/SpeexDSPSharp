@@ -13,7 +13,7 @@ namespace SpeexDSPSharp.Core.SafeHandlers
         public override bool IsInvalid => handle == IntPtr.Zero;
         protected override bool ReleaseHandle()
         {
-            NativeHandler.speex_echo_state_destroy(handle);
+            NativeSpeexDSP.speex_echo_state_destroy(handle);
             return true;
         }
     }

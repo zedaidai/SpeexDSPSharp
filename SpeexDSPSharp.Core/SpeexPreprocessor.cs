@@ -10,7 +10,7 @@ namespace SpeexDSPSharp.Core
 
         public SpeexPreprocessor(int frame_size, int sample_rate)
         {
-            _handler = NativeHandler.speex_preprocess_state_init(frame_size, sample_rate);
+            _handler = NativeSpeexDSP.speex_preprocess_state_init(frame_size, sample_rate);
         }
 
         ~SpeexPreprocessor()
@@ -29,7 +29,7 @@ namespace SpeexDSPSharp.Core
             ThrowIfDisposed();
             fixed (short* xPtr = x)
             {
-                var result = NativeHandler.speex_preprocess_run(_handler, xPtr);
+                var result = NativeSpeexDSP.speex_preprocess_run(_handler, xPtr);
                 CheckError(result);
                 return result;
             }
@@ -40,7 +40,7 @@ namespace SpeexDSPSharp.Core
             ThrowIfDisposed();
             fixed (short* xPtr = x)
             {
-                NativeHandler.speex_preprocess_estimate_update(_handler, xPtr);
+                NativeSpeexDSP.speex_preprocess_estimate_update(_handler, xPtr);
             }
         }
 
@@ -49,7 +49,7 @@ namespace SpeexDSPSharp.Core
             ThrowIfDisposed();
             fixed (void* valuePtr = &value)
             {
-                var result = NativeHandler.speex_preprocess_ctl(_handler, (int)request, valuePtr);
+                var result = NativeSpeexDSP.speex_preprocess_ctl(_handler, (int)request, valuePtr);
                 CheckError(result);
                 return result;
             }

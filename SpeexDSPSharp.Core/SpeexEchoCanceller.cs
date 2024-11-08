@@ -10,12 +10,12 @@ namespace SpeexDSPSharp.Core
 
         public SpeexEchoCanceller(int frame_size, int filter_length)
         {
-            _handler = NativeHandler.speex_echo_state_init(frame_size, filter_length);
+            _handler = NativeSpeexDSP.speex_echo_state_init(frame_size, filter_length);
         }
 
         public SpeexEchoCanceller(int frame_size, int filter_length, int nb_mic, int nb_speaker)
         {
-            _handler = NativeHandler.speex_echo_state_init_mc(frame_size, filter_length, nb_mic, nb_speaker);
+            _handler = NativeSpeexDSP.speex_echo_state_init_mc(frame_size, filter_length, nb_mic, nb_speaker);
         }
 
         ~SpeexEchoCanceller()
@@ -26,7 +26,7 @@ namespace SpeexDSPSharp.Core
         public void Reset()
         {
             ThrowIfDisposed();
-            NativeHandler.speex_echo_state_reset(_handler);
+            NativeSpeexDSP.speex_echo_state_reset(_handler);
         }
 
         public void Dispose()
@@ -44,7 +44,7 @@ namespace SpeexDSPSharp.Core
             fixed (short* playPtr = play)
             fixed (short* outPtr = output)
             {
-                NativeHandler.speex_echo_cancellation(_handler, recPtr, playPtr, outPtr);
+                NativeSpeexDSP.speex_echo_cancellation(_handler, recPtr, playPtr, outPtr);
             }
         }
 
@@ -56,7 +56,7 @@ namespace SpeexDSPSharp.Core
             fixed (short* recPtr = rec)
             fixed (short* outPtr = output)
             {
-                NativeHandler.speex_echo_capture(_handler, recPtr, outPtr);
+                NativeSpeexDSP.speex_echo_capture(_handler, recPtr, outPtr);
             }
         }
 
@@ -65,7 +65,7 @@ namespace SpeexDSPSharp.Core
             ThrowIfDisposed();
             fixed (short* playPtr = play)
             {
-                NativeHandler.speex_echo_playback(_handler, playPtr);
+                NativeSpeexDSP.speex_echo_playback(_handler, playPtr);
             }
         }
 
@@ -74,7 +74,7 @@ namespace SpeexDSPSharp.Core
             ThrowIfDisposed();
             fixed (void* valuePtr = &value)
             {
-                var result = NativeHandler.speex_echo_ctl(_handler, (int)request, valuePtr);
+                var result = NativeSpeexDSP.speex_echo_ctl(_handler, (int)request, valuePtr);
                 CheckError(result);
                 return result;
             }

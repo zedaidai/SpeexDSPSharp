@@ -11,7 +11,7 @@ namespace SpeexDSPSharp.Core
 
         public SpeexJitterBuffer(int step_size)
         {
-            _handler = NativeHandler.jitter_buffer_init(step_size);
+            _handler = NativeSpeexDSP.jitter_buffer_init(step_size);
         }
 
         ~SpeexJitterBuffer()
@@ -22,7 +22,7 @@ namespace SpeexDSPSharp.Core
         public void Reset()
         {
             ThrowIfDisposed();
-            NativeHandler.jitter_buffer_reset(_handler);
+            NativeSpeexDSP.jitter_buffer_reset(_handler);
         }
 
         public void Dispose()
@@ -34,13 +34,13 @@ namespace SpeexDSPSharp.Core
         public void Put(ref SpeexJitterBufferPacket packet)
         {
             ThrowIfDisposed();
-            NativeHandler.jitter_buffer_put(_handler, ref packet);
+            NativeSpeexDSP.jitter_buffer_put(_handler, ref packet);
         }
 
         public unsafe int Get(ref SpeexJitterBufferPacket packet, int desired_span, ref int start_offset)
         {
             ThrowIfDisposed();
-            var result = NativeHandler.jitter_buffer_get(_handler, ref packet, desired_span, (int*)start_offset);
+            var result = NativeSpeexDSP.jitter_buffer_get(_handler, ref packet, desired_span, (int*)start_offset);
             CheckError(result);
             return result;
         }
@@ -48,7 +48,7 @@ namespace SpeexDSPSharp.Core
         public int GetAnother(ref SpeexJitterBufferPacket packet)
         {
             ThrowIfDisposed();
-            var result = NativeHandler.jitter_buffer_get_another(_handler, ref packet);
+            var result = NativeSpeexDSP.jitter_buffer_get_another(_handler, ref packet);
             CheckError(result);
             return result;
         }
@@ -56,7 +56,7 @@ namespace SpeexDSPSharp.Core
         public unsafe int UpdateDelay(ref SpeexJitterBufferPacket packet, ref int start_offset)
         {
             ThrowIfDisposed();
-            var result = NativeHandler.jitter_buffer_update_delay(_handler, ref packet, (int*)start_offset);
+            var result = NativeSpeexDSP.jitter_buffer_update_delay(_handler, ref packet, (int*)start_offset);
             CheckError(result);
             return result;
         }
@@ -64,7 +64,7 @@ namespace SpeexDSPSharp.Core
         public int GetPointerTimestamp()
         {
             ThrowIfDisposed();
-            var result = NativeHandler.jitter_buffer_get_pointer_timestamp(_handler);
+            var result = NativeSpeexDSP.jitter_buffer_get_pointer_timestamp(_handler);
             CheckError(result);
             return result;
         }
@@ -72,13 +72,13 @@ namespace SpeexDSPSharp.Core
         public void Tick()
         {
             ThrowIfDisposed();
-            NativeHandler.jitter_buffer_tick(_handler);
+            NativeSpeexDSP.jitter_buffer_tick(_handler);
         }
 
         public void RemainingSpan(int remaining_span)
         {
             ThrowIfDisposed();
-            NativeHandler.jitter_buffer_remaining_span(_handler, remaining_span);
+            NativeSpeexDSP.jitter_buffer_remaining_span(_handler, remaining_span);
         }
 
         public unsafe int Ctl<T>(JitterBufferCtl request, ref T value) where T : unmanaged
@@ -86,7 +86,7 @@ namespace SpeexDSPSharp.Core
             ThrowIfDisposed();
             fixed (void* valuePtr = &value)
             {
-                var result = NativeHandler.jitter_buffer_ctl(_handler, (int)request, valuePtr);
+                var result = NativeSpeexDSP.jitter_buffer_ctl(_handler, (int)request, valuePtr);
                 CheckError(result);
                 return result;
             }
