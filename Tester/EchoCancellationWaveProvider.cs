@@ -24,20 +24,14 @@ namespace Tester
         public int Read(byte[] buffer, int offset, int count)
         {
             int samplesRead = _source.Read(buffer, offset, count);
-            var shortBuffer = new short[buffer.Length / 2];
 
-            Buffer.BlockCopy(buffer, 0, shortBuffer, 0, buffer.Length);
-            _canceller.EchoPlayback(shortBuffer);
+            _canceller.EchoPlayback(buffer);
             return samplesRead;
         }
 
-        public void Cancel(byte[] buffer)
+        public void Cancel(byte[] buffer, byte[] canceled)
         {
-            var shortBuffer = new short[buffer.Length / 2];
-            Buffer.BlockCopy(buffer, 0, shortBuffer, 0, buffer.Length);
-            _canceller.EchoCapture(shortBuffer, out var output);
-
-            Buffer.BlockCopy(output, 0, buffer, 0, output.Length * 2);
+            _canceller.EchoCapture(buffer, canceled);
         }
     }
 }

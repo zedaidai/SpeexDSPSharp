@@ -77,7 +77,7 @@ namespace SpeexDSPSharp.Core
         protected static void CheckError(int result)
         {
             if (result < 0)
-                throw new SpeexException(result.ToString());
+                throw new SpeexDSPException(result.ToString());
         }
     }
 }

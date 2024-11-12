@@ -3,7 +3,7 @@ using Tester;
 
 var format = new WaveFormat(48000, 1);
 var buffer = new BufferedWaveProvider(format) { ReadFully = true };
-var echo = new EchoCancellationWaveProvider(20, 100, buffer);
+var echo = new EchoCancellationWaveProvider(20, 200, buffer);
 var recorder = new WaveInEvent()
 {
     WaveFormat = format,
@@ -26,8 +26,9 @@ void Recorder_DataAvailable(object? sender, WaveInEventArgs e)
 {
     try
     {
-        echo.Cancel(e.Buffer);
-        buffer.AddSamples(e.Buffer, 0, e.BytesRecorded);
+        var output = new byte[e.BytesRecorded];
+        echo.Cancel(e.Buffer, output);
+        buffer.AddSamples(output, 0, e.BytesRecorded);
     }
     catch(Exception ex)
     {

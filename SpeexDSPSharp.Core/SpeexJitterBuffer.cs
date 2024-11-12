@@ -6,7 +6,7 @@ namespace SpeexDSPSharp.Core
 {
     public class SpeexJitterBuffer : IDisposable
     {
-        private readonly SpeexJitterBufferSafeHandler _handler;
+        protected readonly SpeexJitterBufferSafeHandler _handler;
         private bool _disposed;
 
         public SpeexJitterBuffer(int step_size)
@@ -114,7 +114,7 @@ namespace SpeexDSPSharp.Core
         protected static void CheckError(int result)
         {
             if (result < 0)
-                throw new SpeexException(((JitterBufferState)result).ToString());
+                throw new SpeexDSPException(((JitterBufferState)result).ToString());
         }
     }
 }
