@@ -305,7 +305,7 @@ namespace SpeexDSPSharp.Core
         /// <exception cref="ObjectDisposedException" />
         protected virtual void ThrowIfDisposed()
         {
-            if (_disposed)
+            if (_disposed || _handler.IsClosed)
                 throw new ObjectDisposedException(GetType().FullName);
         }
 

@@ -81,7 +81,7 @@ namespace SpeexDSPSharp.Core
         /// Get pointer timestamp of jitter buffer.
         /// </summary>
         /// <param name="jitter">Jitter buffer state.</param>
-        /// <returns><see cref="JitterBufferState"/></returns>
+        /// <returns>I have no clue what this returns.</returns>
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int jitter_buffer_get_pointer_timestamp(SpeexJitterBufferSafeHandler jitter);
 
