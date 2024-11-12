@@ -7,16 +7,10 @@ namespace SpeexDSPSharp.Core
 {
     public static class NativeSpeexDSP
     {
-#if ANDROID
-        private const string DllName = "libspeexdsp.so";
-#elif LINUX
-        private const string DllName = "libspeexdsp.so.1.5.2";
-#elif WINDOWS
-        private const string DllName = "libspeexdsp-1.dll";
-#elif MACOS || IOS || MACCATALYST
+#if MACOS || IOS || MACCATALYST
         private const string DllName = "__Internal__";
 #else
-        private const string DllName = "libspeexdsp";
+        private const string DllName = "speexdsp";
 #endif
 
         //Jitter Buffer
