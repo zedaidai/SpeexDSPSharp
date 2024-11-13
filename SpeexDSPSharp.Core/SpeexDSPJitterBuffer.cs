@@ -5,29 +5,29 @@ using System;
 namespace SpeexDSPSharp.Core
 {
     /// <summary>
-    /// Speex jitter buffer.
+    /// Speexdsp jitter buffer.
     /// </summary>
-    public class SpeexJitterBuffer : IDisposable
+    public class SpeexDSPJitterBuffer : IDisposable
     {
         /// <summary>
-        /// Direct safe handle for the <see cref="SpeexJitterBuffer"/>. IT IS NOT RECOMMENDED TO CLOSE THE HANDLE DIRECTLY! Instead use <see cref="Dispose(bool)"/> to dispose the handle and object safely.
+        /// Direct safe handle for the <see cref="SpeexDSPJitterBuffer"/>. IT IS NOT RECOMMENDED TO CLOSE THE HANDLE DIRECTLY! Instead use <see cref="Dispose(bool)"/> to dispose the handle and object safely.
         /// </summary>
-        protected readonly SpeexJitterBufferSafeHandler _handler;
+        protected readonly SpeexDSPJitterBufferSafeHandler _handler;
         private bool _disposed;
 
         /// <summary>
-        /// Creates a new speex jitter buffer.
+        /// Creates a new speexdsp jitter buffer.
         /// </summary>
         /// <param name="step_size">Starting value for the size of concealment packets and delay adjustment steps. Can be changed at any time using JITTER_BUFFER_SET_DELAY_STEP and JITTER_BUFFER_GET_CONCEALMENT_SIZE.</param>
-        public SpeexJitterBuffer(int step_size)
+        public SpeexDSPJitterBuffer(int step_size)
         {
             _handler = NativeSpeexDSP.jitter_buffer_init(step_size);
         }
 
         /// <summary>
-        /// Speex jitter buffer destructor.
+        /// Speexdsp jitter buffer destructor.
         /// </summary>
-        ~SpeexJitterBuffer()
+        ~SpeexDSPJitterBuffer()
         {
             Dispose(false);
         }
@@ -45,7 +45,7 @@ namespace SpeexDSPSharp.Core
         /// Put one packet into the jitter buffer.
         /// </summary>
         /// <param name="packet">Incoming packet.</param>
-        public void Put(ref SpeexJitterBufferPacket packet)
+        public void Put(ref SpeexDSPJitterBufferPacket packet)
         {
             ThrowIfDisposed();
             NativeSpeexDSP.jitter_buffer_put(_handler, ref packet);
@@ -58,7 +58,7 @@ namespace SpeexDSPSharp.Core
         /// <param name="desired_span">Number of samples (or units) we wish to get from the buffer (no guarantee).</param>
         /// <param name="start_offset">Timestamp for the returned packet.</param>
         /// <returns><see cref="JitterBufferState"/></returns>
-        public unsafe int Get(ref SpeexJitterBufferPacket packet, int desired_span, ref int start_offset)
+        public unsafe int Get(ref SpeexDSPJitterBufferPacket packet, int desired_span, ref int start_offset)
         {
             ThrowIfDisposed();
             var result = NativeSpeexDSP.jitter_buffer_get(_handler, ref packet, desired_span, (int*)start_offset);
@@ -71,7 +71,7 @@ namespace SpeexDSPSharp.Core
         /// </summary>
         /// <param name="packet">Returned packet.</param>
         /// <returns><see cref="JitterBufferState"/></returns>
-        public int GetAnother(ref SpeexJitterBufferPacket packet)
+        public int GetAnother(ref SpeexDSPJitterBufferPacket packet)
         {
             ThrowIfDisposed();
             var result = NativeSpeexDSP.jitter_buffer_get_another(_handler, ref packet);
@@ -85,7 +85,7 @@ namespace SpeexDSPSharp.Core
         /// <param name="packet"></param>
         /// <param name="start_offset"></param>
         /// <returns></returns>
-        public unsafe int UpdateDelay(ref SpeexJitterBufferPacket packet, ref int start_offset)
+        public unsafe int UpdateDelay(ref SpeexDSPJitterBufferPacket packet, ref int start_offset)
         {
             ThrowIfDisposed();
             var result = NativeSpeexDSP.jitter_buffer_update_delay(_handler, ref packet, (int*)start_offset);

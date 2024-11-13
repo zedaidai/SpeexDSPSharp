@@ -6,7 +6,7 @@ namespace Tester
     public class EchoCancellationWaveProvider : IWaveProvider
     {
         private IWaveProvider _source;
-        private SpeexEchoCanceller _canceller;
+        private SpeexDSPEchoCanceler _canceller;
 
         public WaveFormat WaveFormat => _source.WaveFormat;
 
@@ -17,7 +17,7 @@ namespace Tester
             var frame_size = frame_size_ms * sampleRate / 1000;
             var filter_length = filter_length_ms * sampleRate / 1000;
 
-            _canceller = new SpeexEchoCanceller(frame_size, filter_length);
+            _canceller = new SpeexDSPEchoCanceler(frame_size, filter_length);
             _canceller.Ctl(EchoCancellationCtl.SPEEX_ECHO_SET_SAMPLING_RATE, ref sampleRate);
         }
 

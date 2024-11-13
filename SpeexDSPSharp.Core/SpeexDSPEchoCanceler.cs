@@ -4,48 +4,48 @@ using System;
 namespace SpeexDSPSharp.Core
 {
     /// <summary>
-    /// Speex echo cancellation.
+    /// Speexdsp echo cancellation.
     /// </summary>
-    public class SpeexEchoCanceller
+    public class SpeexDSPEchoCanceler
     {
         /// <summary>
-        /// Direct safe handle for the <see cref="SpeexEchoCanceller"/>. IT IS NOT RECOMMENDED TO CLOSE THE HANDLE DIRECTLY! Instead use <see cref="Dispose(bool)"/> to dispose the handle and object safely.
+        /// Direct safe handle for the <see cref="SpeexDSPEchoCanceler"/>. IT IS NOT RECOMMENDED TO CLOSE THE HANDLE DIRECTLY! Instead use <see cref="Dispose(bool)"/> to dispose the handle and object safely.
         /// </summary>
-        protected readonly SpeexEchoStateSafeHandler _handler;
+        protected readonly SpeexDSPEchoStateSafeHandler _handler;
         private bool _disposed;
 
         /// <summary>
-        /// Creates a new speex echo canceller.
+        /// Creates a new speexdsp echo canceler.
         /// </summary>
         /// <param name="frame_size">Number of samples to process at one time (should correspond to 10-20 ms).</param>
         /// <param name="filter_length">Number of samples of echo to cancel (should generally correspond to 100-500 ms).</param>
-        public SpeexEchoCanceller(int frame_size, int filter_length)
+        public SpeexDSPEchoCanceler(int frame_size, int filter_length)
         {
             _handler = NativeSpeexDSP.speex_echo_state_init(frame_size, filter_length);
         }
 
         /// <summary>
-        /// Creates a new multi-channel speex echo canceller.
+        /// Creates a new multi-channel speexdsp echo canceler.
         /// </summary>
         /// <param name="frame_size">Number of samples to process at one time (should correspond to 10-20 ms).</param>
         /// <param name="filter_length">Number of samples of echo to cancel (should generally correspond to 100-500 ms).</param>
         /// <param name="nb_mic">Number of microphone channels.</param>
         /// <param name="nb_speaker">Number of speaker channels.</param>
-        public SpeexEchoCanceller(int frame_size, int filter_length, int nb_mic, int nb_speaker)
+        public SpeexDSPEchoCanceler(int frame_size, int filter_length, int nb_mic, int nb_speaker)
         {
             _handler = NativeSpeexDSP.speex_echo_state_init_mc(frame_size, filter_length, nb_mic, nb_speaker);
         }
 
         /// <summary>
-        /// Speex echo canceller destructor.
+        /// Speexdsp echo canceler destructor.
         /// </summary>
-        ~SpeexEchoCanceller()
+        ~SpeexDSPEchoCanceler()
         {
             Dispose(false);
         }
 
         /// <summary>
-        /// Reset the echo canceller to its original state.
+        /// Reset the echo canceler to its original state.
         /// </summary>
         public void Reset()
         {
@@ -54,7 +54,7 @@ namespace SpeexDSPSharp.Core
         }
 
         /// <summary>
-        /// Let the echo canceller know that a frame was just queued to the soundcard.
+        /// Let the echo canceler know that a frame was just queued to the sound card.
         /// </summary>
         /// <param name="play">Signal played to the speaker (received from far end).</param>
         public unsafe void EchoPlayback(Span<byte> play)
@@ -67,7 +67,7 @@ namespace SpeexDSPSharp.Core
         }
 
         /// <summary>
-        /// Let the echo canceller know that a frame was just queued to the soundcard.
+        /// Let the echo canceler know that a frame was just queued to the sound card.
         /// </summary>
         /// <param name="play">Signal played to the speaker (received from far end).</param>
         public unsafe void EchoPlayback(Span<short> play)
@@ -80,7 +80,7 @@ namespace SpeexDSPSharp.Core
         }
 
         /// <summary>
-        /// Let the echo canceller know that a frame was just queued to the soundcard.
+        /// Let the echo canceler know that a frame was just queued to the sound card.
         /// </summary>
         /// <param name="play">Signal played to the speaker (received from far end).</param>
         public unsafe void EchoPlayback(Span<float> play)
@@ -93,25 +93,25 @@ namespace SpeexDSPSharp.Core
         }
 
         /// <summary>
-        /// Let the echo canceller know that a frame was just queued to the soundcard.
+        /// Let the echo canceler know that a frame was just queued to the sound card.
         /// </summary>
         /// <param name="play">Signal played to the speaker (received from far end).</param>
         public void EchoPlayback(byte[] play) => EchoPlayback(play.AsSpan());
 
         /// <summary>
-        /// Let the echo canceller know that a frame was just queued to the soundcard.
+        /// Let the echo canceler know that a frame was just queued to the sound card.
         /// </summary>
         /// <param name="play">Signal played to the speaker (received from far end).</param>
         public void EchoPlayback(short[] play) => EchoPlayback(play.AsSpan());
 
         /// <summary>
-        /// Let the echo canceller know that a frame was just queued to the soundcard.
+        /// Let the echo canceler know that a frame was just queued to the sound card.
         /// </summary>
         /// <param name="play">Signal played to the speaker (received from far end).</param>
         public void EchoPlayback(float[] play) => EchoPlayback(play.AsSpan());
 
         /// <summary>
-        /// Perform echo cancellation using internal playback buffer, which is delayed by two frames to account for the delay introduced by most soundcards (but it could be off!).
+        /// Perform echo cancellation using internal playback buffer, which is delayed by two frames to account for the delay introduced by most sound cards (but it could be off!).
         /// </summary>
         /// <param name="rec">Signal from the microphone (near end + far end echo).</param>
         /// <param name="output">Returns near-end signal with echo removed.</param>
@@ -126,7 +126,7 @@ namespace SpeexDSPSharp.Core
         }
 
         /// <summary>
-        /// Perform echo cancellation using internal playback buffer, which is delayed by two frames to account for the delay introduced by most soundcards (but it could be off!).
+        /// Perform echo cancellation using internal playback buffer, which is delayed by two frames to account for the delay introduced by most sound cards (but it could be off!).
         /// </summary>
         /// <param name="rec">Signal from the microphone (near end + far end echo).</param>
         /// <param name="output">Returns near-end signal with echo removed.</param>
@@ -141,7 +141,7 @@ namespace SpeexDSPSharp.Core
         }
 
         /// <summary>
-        /// Perform echo cancellation using internal playback buffer, which is delayed by two frames to account for the delay introduced by most soundcards (but it could be off!).
+        /// Perform echo cancellation using internal playback buffer, which is delayed by two frames to account for the delay introduced by most sound cards (but it could be off!).
         /// </summary>
         /// <param name="rec">Signal from the microphone (near end + far end echo).</param>
         /// <param name="output">Returns near-end signal with echo removed.</param>
@@ -156,21 +156,21 @@ namespace SpeexDSPSharp.Core
         }
 
         /// <summary>
-        /// Perform echo cancellation using internal playback buffer, which is delayed by two frames to account for the delay introduced by most soundcards (but it could be off!).
+        /// Perform echo cancellation using internal playback buffer, which is delayed by two frames to account for the delay introduced by most sound cards (but it could be off!).
         /// </summary>
         /// <param name="rec">Signal from the microphone (near end + far end echo).</param>
         /// <param name="output">Returns near-end signal with echo removed.</param>
         public unsafe void EchoCapture(byte[] rec, byte[] output) => EchoCapture(rec.AsSpan(), output.AsSpan());
 
         /// <summary>
-        /// Perform echo cancellation using internal playback buffer, which is delayed by two frames to account for the delay introduced by most soundcards (but it could be off!).
+        /// Perform echo cancellation using internal playback buffer, which is delayed by two frames to account for the delay introduced by most sound cards (but it could be off!).
         /// </summary>
         /// <param name="rec">Signal from the microphone (near end + far end echo).</param>
         /// <param name="output">Returns near-end signal with echo removed.</param>
         public unsafe void EchoCapture(short[] rec, short[] output) => EchoCapture(rec.AsSpan(), output.AsSpan());
 
         /// <summary>
-        /// Perform echo cancellation using internal playback buffer, which is delayed by two frames to account for the delay introduced by most soundcards (but it could be off!).
+        /// Perform echo cancellation using internal playback buffer, which is delayed by two frames to account for the delay introduced by most sound cards (but it could be off!).
         /// </summary>
         /// <param name="rec">Signal from the microphone (near end + far end echo).</param>
         /// <param name="output">Returns near-end signal with echo removed.</param>
