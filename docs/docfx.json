@@ -1,0 +1,34 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "../SpeexDSPSharp.Core",
+          "files": ["**/*.csproj"]
+        }
+      ],
+      "dest": "api"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": ["**/*.{md,yml}"],
+        "exclude": ["_site/**"]
+      }
+    ],
+    "resource": [
+      {
+        "files": ["images/**"]
+      }
+    ],
+    "output": "_site",
+    "template": ["default", "templates/singulinkfx"],
+    "globalMetadata": {
+      "_appName": "SpeexDSPSharp",
+      "_appTitle": "SpeexDSPSharp",
+      "_enableSearch": true,
+      "pdf": false
+    }
+  }
+}

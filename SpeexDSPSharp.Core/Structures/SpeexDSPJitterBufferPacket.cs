@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace SpeexDSPSharp.Core.Structures
 {
@@ -12,7 +13,7 @@ namespace SpeexDSPSharp.Core.Structures
         /// Data bytes contained in the packet.
         /// </summary>
         [MarshalAs(UnmanagedType.ByValArray)]
-        public byte[] data;
+        public Memory<byte> data;
 
         /// <summary>
         /// Length of the packet in bytes.
