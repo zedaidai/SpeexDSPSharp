@@ -1,4 +1,9 @@
-﻿using NAudio.Wave;
+# SpeexDSPPreprocessor Examples
+
+
+## Preprocessor Run
+```csharp
+using NAudio.Wave;
 using SpeexDSPSharp.Core;
 
 var format = new WaveFormat(48000, 1);
@@ -42,3 +47,4 @@ void Recorder_DataAvailable(object? sender, WaveInEventArgs e)
 }
 
 Console.ReadLine();
+```

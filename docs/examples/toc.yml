@@ -4,3 +4,5 @@
   href: NativeSpeexDSP.md
 - name: SpeexDSPJitterBuffer
   href: SpeexDSPJitterBuffer.md
+- name: SpeexDSPPreprocessor
+  href: SpeexDSPPreprocessor.md

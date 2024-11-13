@@ -46,10 +46,6 @@ public class SpeexJitterBuffer
         buffer.Tick();
     }
 
-    /// <summary>
-    /// Puts the <paramref name="frameData"/> into the buffer. Note that the given byte array
-    /// is not copied so you transfer ownership to the buffer.
-    /// </summary>
     public void Put(byte[] frameData)
     {
         var inPacket = new SpeexDSPJitterBufferPacket(frameData, (uint)frameData.Length);
