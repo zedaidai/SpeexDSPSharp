@@ -1,9 +1,6 @@
 name: SpeexDSP Compile
 
 on:
-  pull_request:
-    branches: [ "main" ]
-
   workflow_dispatch:
 
 jobs:
