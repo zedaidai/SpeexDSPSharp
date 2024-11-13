@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>SpeexDSPSharp.Natives</id>
-    <version>1.0.4</version>
+    <version>1.2.1</version>
     <description>Contains native binaries for SpeexDSPSharp.</description>
     <authors>The SpeexDSP Authors</authors>
     <projectUrl>https://www.speex.org/</projectUrl>
