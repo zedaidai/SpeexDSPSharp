@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace SpeexDSPSharp.Core.Structures
 {
@@ -7,13 +6,12 @@ namespace SpeexDSPSharp.Core.Structures
     /// Definition of an incoming packet.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct SpeexDSPJitterBufferPacket
+    public unsafe struct SpeexDSPJitterBufferPacket
     {
         /// <summary>
         /// Data bytes contained in the packet.
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValArray)]
-        public Memory<byte> data;
+        public byte* data;
 
         /// <summary>
         /// Length of the packet in bytes.
@@ -39,5 +37,23 @@ namespace SpeexDSPSharp.Core.Structures
         /// Put whatever data you like here (it's ignored by the jitter buffer).
         /// </summary>
         public uint user_data;
+
+        /// <summary>
+        /// Constructs a new <see cref="SpeexDSPJitterBufferPacket(byte[], uint)"/>.
+        /// </summary>
+        /// <param name="inputData">The data you want to input/output.</param>
+        /// <param name="length">The length of the input data.</param>
+        public SpeexDSPJitterBufferPacket(byte[] inputData, uint length)
+        {
+            fixed (byte* inputPtr = inputData)
+            {
+                data = inputPtr;
+            }
+            len = length;
+            timestamp = 0;
+            span = 0;
+            sequence = 0;
+            user_data = 0;
+        }
     }
 }
