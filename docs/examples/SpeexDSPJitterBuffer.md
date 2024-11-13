@@ -1,4 +1,8 @@
-﻿using SpeexDSPSharp.Core;
+# SpeexDSPJitterBuffer Examples
+
+## Put and Get
+```csharp
+using SpeexDSPSharp.Core;
 using SpeexDSPSharp.Core.Structures;
 
 var jitter = new SpeexJitterBuffer();
@@ -59,3 +63,4 @@ public class SpeexJitterBuffer
         buffer.Put(ref inPacket);
     }
 }
+```

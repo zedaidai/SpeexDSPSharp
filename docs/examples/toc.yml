@@ -2,3 +2,5 @@
   href: Home.md
 - name: NativeSpeexDSP
   href: NativeSpeexDSP.md
+- name: SpeexDSPJitterBuffer
+  href: SpeexDSPJitterBuffer.md

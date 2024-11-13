@@ -37,7 +37,23 @@ namespace SpeexDSPSharp.Core
         /// </summary>
         /// <param name="x">Audio sample vector (in and out). Must be same size as specified in <see cref="SpeexDSPPreprocessor(int, int)" />.</param>
         /// <returns>Bool value for voice activity (1 for speech, 0 for noise/silence), ONLY if VAD turned on.</returns>
-        public unsafe int Run(short[] x)
+        public unsafe int Run(Span<byte> x)
+        {
+            ThrowIfDisposed();
+            fixed (byte* xPtr = x)
+            {
+                var result = NativeSpeexDSP.speex_preprocess_run(_handler, (short*)xPtr);
+                CheckError(result);
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Preprocess a frame.
+        /// </summary>
+        /// <param name="x">Audio sample vector (in and out). Must be same size as specified in <see cref="SpeexDSPPreprocessor(int, int)" />.</param>
+        /// <returns>Bool value for voice activity (1 for speech, 0 for noise/silence), ONLY if VAD turned on.</returns>
+        public unsafe int Run(Span<short> x)
         {
             ThrowIfDisposed();
             fixed (short* xPtr = x)
@@ -49,10 +65,60 @@ namespace SpeexDSPSharp.Core
         }
 
         /// <summary>
+        /// Preprocess a frame.
+        /// </summary>
+        /// <param name="x">Audio sample vector (in and out). Must be same size as specified in <see cref="SpeexDSPPreprocessor(int, int)" />.</param>
+        /// <returns>Bool value for voice activity (1 for speech, 0 for noise/silence), ONLY if VAD turned on.</returns>
+        public unsafe int Run(Span<float> x)
+        {
+            ThrowIfDisposed();
+            fixed (float* xPtr = x)
+            {
+                var result = NativeSpeexDSP.speex_preprocess_run(_handler, (short*)xPtr);
+                CheckError(result);
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Preprocess a frame.
+        /// </summary>
+        /// <param name="x">Audio sample vector (in and out). Must be same size as specified in <see cref="SpeexDSPPreprocessor(int, int)" />.</param>
+        /// <returns>Bool value for voice activity (1 for speech, 0 for noise/silence), ONLY if VAD turned on.</returns>
+        public int Run(byte[] x) => Run(x.AsSpan());
+
+        /// <summary>
+        /// Preprocess a frame.
+        /// </summary>
+        /// <param name="x">Audio sample vector (in and out). Must be same size as specified in <see cref="SpeexDSPPreprocessor(int, int)" />.</param>
+        /// <returns>Bool value for voice activity (1 for speech, 0 for noise/silence), ONLY if VAD turned on.</returns>
+        public int Run(short[] x) => Run(x.AsSpan());
+
+        /// <summary>
+        /// Preprocess a frame.
+        /// </summary>
+        /// <param name="x">Audio sample vector (in and out). Must be same size as specified in <see cref="SpeexDSPPreprocessor(int, int)" />.</param>
+        /// <returns>Bool value for voice activity (1 for speech, 0 for noise/silence), ONLY if VAD turned on.</returns>
+        public int Run(float[] x) => Run(x.AsSpan());
+
+        /// <summary>
         /// Update preprocessor state, but do not compute the output.
         /// </summary>
         /// <param name="x">Audio sample vector (in only). Must be same size as specified in <see cref="SpeexDSPPreprocessor(int, int)" />.</param>
-        public unsafe void EstimateUpdate(short[] x)
+        public unsafe void EstimateUpdate(Span<byte> x)
+        {
+            ThrowIfDisposed();
+            fixed (byte* xPtr = x)
+            {
+                NativeSpeexDSP.speex_preprocess_estimate_update(_handler, (short*)xPtr);
+            }
+        }
+
+        /// <summary>
+        /// Update preprocessor state, but do not compute the output.
+        /// </summary>
+        /// <param name="x">Audio sample vector (in only). Must be same size as specified in <see cref="SpeexDSPPreprocessor(int, int)" />.</param>
+        public unsafe void EstimateUpdate(Span<short> x)
         {
             ThrowIfDisposed();
             fixed (short* xPtr = x)
@@ -60,6 +126,37 @@ namespace SpeexDSPSharp.Core
                 NativeSpeexDSP.speex_preprocess_estimate_update(_handler, xPtr);
             }
         }
+
+        /// <summary>
+        /// Update preprocessor state, but do not compute the output.
+        /// </summary>
+        /// <param name="x">Audio sample vector (in only). Must be same size as specified in <see cref="SpeexDSPPreprocessor(int, int)" />.</param>
+        public unsafe void EstimateUpdate(Span<float> x)
+        {
+            ThrowIfDisposed();
+            fixed (float* xPtr = x)
+            {
+                NativeSpeexDSP.speex_preprocess_estimate_update(_handler, (short*)xPtr);
+            }
+        }
+
+        /// <summary>
+        /// Update preprocessor state, but do not compute the output.
+        /// </summary>
+        /// <param name="x">Audio sample vector (in only). Must be same size as specified in <see cref="SpeexDSPPreprocessor(int, int)" />.</param>
+        public void EstimateUpdate(byte[] x) => EstimateUpdate(x.AsSpan());
+
+        /// <summary>
+        /// Update preprocessor state, but do not compute the output.
+        /// </summary>
+        /// <param name="x">Audio sample vector (in only). Must be same size as specified in <see cref="SpeexDSPPreprocessor(int, int)" />.</param>
+        public void EstimateUpdate(short[] x) => EstimateUpdate(x.AsSpan());
+
+        /// <summary>
+        /// Update preprocessor state, but do not compute the output.
+        /// </summary>
+        /// <param name="x">Audio sample vector (in only). Must be same size as specified in <see cref="SpeexDSPPreprocessor(int, int)" />.</param>
+        public void EstimateUpdate(float[] x) => EstimateUpdate(x.AsSpan());
 
         /// <summary>
         /// Performs a ctl request.
