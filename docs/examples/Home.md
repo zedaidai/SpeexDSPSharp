@@ -1,6 +1,6 @@
 # Examples
 
-Below are some general examples for OpusSharp's api.
+Below are some general examples for SpeexDSPSharp's api.
 
 ## NAudio Example
 
