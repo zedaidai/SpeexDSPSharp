@@ -20,9 +20,9 @@
 	</metadata>
 
 	<files>
-	  <file src="bin/Release/netstandard2.1/SpeexDSPSharp.dll" target="lib/netstandard2.1/SpeexDSPSharp.dll" />
-	  <file src="bin/Release/netstandard2.1/SpeexDSPSharp.pdb" target="lib/netstandard2.1/SpeexDSPSharp.pdb" />
-	  <file src="bin/Release/netstandard2.1/SpeexDSPSharp.xml" target="lib/netstandard2.1" />
+	  <file src="bin/Release/netstandard2.1/SpeexDSPSharp.Core.dll" target="lib/netstandard2.1/SpeexDSPSharp.Core.dll" />
+	  <file src="bin/Release/netstandard2.1/SpeexDSPSharp.Core.pdb" target="lib/netstandard2.1/SpeexDSPSharp.Core.pdb" />
+	  <file src="bin/Release/netstandard2.1/SpeexDSPSharp.Core.xml" target="lib/netstandard2.1" />
 	  <file src="../README.md" target="docs" />
 	  <file src="../LICENSE.txt" target="" />
 	</files>
