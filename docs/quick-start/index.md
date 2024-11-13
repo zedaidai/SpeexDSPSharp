@@ -11,9 +11,9 @@ Or you can install it via the dotnet CLI.
 dotnet add package SpeexDSPSharp.Core --version x.y.z
 ```
 
-## Step 2: Include Opus DLL.
+## Step 2: Include SpeexDSP DLL.
 
-By default, SpeexDSPSharp.Core DOES NOT contain the opus precompiled DLL's or binaries. This is so you can choose to provide your own DLL's or binary files instead of using SpeexDSPSharp's compiled binaries.
+By default, SpeexDSPSharp.Core DOES NOT contain the speexdsp precompiled DLL's or binaries. This is so you can choose to provide your own DLL's or binary files instead of using SpeexDSPSharp's compiled binaries.
 
 However if you want to use the precompiled binaries that SpeexDSPSharp provides, you can install the SpeexDSPSharp.Natives package onto your platform specific projects via the nuget package manager through your IDE, e.g. VS22, Rider, etc...
 
