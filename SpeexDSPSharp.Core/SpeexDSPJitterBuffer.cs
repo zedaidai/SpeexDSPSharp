@@ -58,12 +58,11 @@ namespace SpeexDSPSharp.Core
         /// <param name="desired_span">Number of samples (or units) we wish to get from the buffer (no guarantee).</param>
         /// <param name="start_offset">Timestamp for the returned packet.</param>
         /// <returns><see cref="JitterBufferState"/></returns>
-        public unsafe int Get(ref SpeexDSPJitterBufferPacket packet, int desired_span, ref int start_offset)
+        public unsafe JitterBufferState Get(ref SpeexDSPJitterBufferPacket packet, int desired_span, ref int start_offset)
         {
             ThrowIfDisposed();
             var result = NativeSpeexDSP.jitter_buffer_get(_handler, ref packet, desired_span, (int*)start_offset);
-            CheckError(result);
-            return result;
+            return (JitterBufferState)result;
         }
 
         /// <summary>
@@ -75,7 +74,6 @@ namespace SpeexDSPSharp.Core
         {
             ThrowIfDisposed();
             var result = NativeSpeexDSP.jitter_buffer_get_another(_handler, ref packet);
-            CheckError(result);
             return result;
         }
 
@@ -182,7 +180,7 @@ namespace SpeexDSPSharp.Core
         protected static void CheckError(int error)
         {
             if (error < 0)
-                throw new SpeexDSPException(((JitterBufferState)error).ToString());
+                throw new SpeexDSPException(error.ToString());
         }
     }
 }

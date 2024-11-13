@@ -20,7 +20,7 @@ namespace SpeexDSPSharp.Core
         /// <summary>
         /// Initializes jitter buffer.
         /// </summary>
-        /// <param name="step_size">Starting value for the size of concealment packets and delay adjustment steps. Can be changed at any time using JITTER_BUFFER_SET_DELAY_STEP and JITTER_BUFFER_GET_CONCEALMENT_SIZE.</param>
+        /// <param name="step_size">Starting value for the size of concealment packets and delay adjustment steps. Can be changed at any time using <see cref="JitterBufferCtl.JITTER_BUFFER_SET_DELAY_STEP"/> and <see cref="JitterBufferCtl.JITTER_BUFFER_GET_CONCEALMENT_SIZE"/>.</param>
         /// <returns>Newly created jitter buffer state.</returns>
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
         public static extern SpeexDSPJitterBufferSafeHandler jitter_buffer_init(int step_size);
@@ -59,7 +59,7 @@ namespace SpeexDSPSharp.Core
         public static unsafe extern int jitter_buffer_get(SpeexDSPJitterBufferSafeHandler jitter, ref SpeexDSPJitterBufferPacket packet, int desired_span, int* start_offset);
 
         /// <summary>
-        /// Used right after jitter_buffer_get() to obtain another packet that would have the same timestamp. This is mainly useful for media where a single "frame" can be split into several packets.
+        /// Used right after <see cref="jitter_buffer_get(SpeexDSPJitterBufferSafeHandler, ref SpeexDSPJitterBufferPacket, int, int*)"/> to obtain another packet that would have the same timestamp. This is mainly useful for media where a single "frame" can be split into several packets.
         /// </summary>
         /// <param name="jitter">Jitter buffer state.</param>
         /// <param name="packet">Returned packet.</param>
@@ -81,7 +81,7 @@ namespace SpeexDSPSharp.Core
         /// Get pointer timestamp of jitter buffer.
         /// </summary>
         /// <param name="jitter">Jitter buffer state.</param>
-        /// <returns>I have no clue what this returns.</returns>
+        /// <returns>The pointer timestamp.</returns>
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int jitter_buffer_get_pointer_timestamp(SpeexDSPJitterBufferSafeHandler jitter);
 
@@ -104,7 +104,7 @@ namespace SpeexDSPSharp.Core
         /// Used like the ioctl function to control the jitter buffer parameters.
         /// </summary>
         /// <param name="jitter">Jitter buffer state.</param>
-        /// <param name="request">ioctl-type request (one of the JITTER_BUFFER_* macros).</param>
+        /// <param name="request">ioctl-type request (one of the <see cref="JitterBufferCtl"/> macros).</param>
         /// <param name="ptr">Data exchanged to-from function.</param>
         /// <returns>0 if no error, -1 if request is unknown.</returns>
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
@@ -177,7 +177,7 @@ namespace SpeexDSPSharp.Core
         /// Used like the ioctl function to control the echo canceler parameters.
         /// </summary>
         /// <param name="st">Echo canceler state.</param>
-        /// <param name="request">ioctl-type request (one of the SPEEX_ECHO_* macros).</param>
+        /// <param name="request">ioctl-type request (one of the <see cref="EchoCancellationCtl"/> macros).</param>
         /// <param name="ptr">Data exchanged to-from function.</param>
         /// <returns>0 if no error, -1 if request in unknown.</returns>
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
