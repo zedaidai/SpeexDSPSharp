@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package>
+	<metadata>
+		<id>SpeexDSPSharp.Core</id>
+		<version>1.2.1</version>
+		<authors>SineVector241</authors>
+		<description>Standard library for SpeexDSPSharp.</description>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<copyright>Copyright MIT</copyright>
+		<license type="file">LICENSE.txt</license>
+		<readme>docs/README.md</readme>
+
+		<projectUrl>https://avionblock.github.io/SpeexDSPSharp/index.html</projectUrl>
+		<repository type="git" url="https://github.com/AvionBlock/SpeexDSPSharp"></repository>
+
+		<dependencies>
+		  <group targetFramework="netstandard2.1">
+		  </group>
+		</dependencies>
+	</metadata>
+
+	<files>
+	  <file src="bin/Release/netstandard2.1/SpeexDSPSharp.dll" target="lib/netstandard2.1/SpeexDSPSharp.dll" />
+	  <file src="bin/Release/netstandard2.1/SpeexDSPSharp.pdb" target="lib/netstandard2.1/SpeexDSPSharp.pdb" />
+	  <file src="bin/Release/netstandard2.1/SpeexDSPSharp.xml" target="lib/netstandard2.1" />
+	  <file src="../README.md" target="docs" />
+	  <file src="../LICENSE.txt" target="" />
+	</files>
+</package>
