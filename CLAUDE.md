@@ -109,6 +109,19 @@ Native binaries are stored in `SpeexDSPSharp.Natives/runtimes/{RID}/native/` fol
 2. Place binary in appropriate RID folder (e.g., `linux-arm64/native/libspeexdsp.so`)
 3. Update `.nuspec` to include new runtime
 
+### Compiling Native Binaries
+
+Native binaries are compiled via the `.github/workflows/SpeexDSPCompile.yaml` GitHub Actions workflow. This workflow clones the upstream speexdsp library and cross-compiles for multiple platforms.
+
+**Android 16KB Page Size Requirement (SDK 35+)**:
+- As of November 2025, Google Play requires all apps targeting Android 15+ (API 35) to support 16KB page sizes
+- The Android arm64 and x86_64 builds include the required linker flags:
+  - `-Wl,-z,max-page-size=16384`: Aligns the binary to 16KB page boundaries
+  - `-D__BIONIC_NO_PAGE_SIZE_MACRO`: Prevents hardcoded PAGE_SIZE assumptions
+- These flags ensure the compiled `.so` files work on both 4KB (older devices) and 16KB (newer devices) page sizes
+- The 32-bit Android builds (arm32, x86) do NOT require these flags as the 16KB requirement only applies to 64-bit architectures
+- API level remains at 21 for maximum device compatibility while still supporting 16KB pages
+
 ## Important Notes
 
 - All processing methods expect frame sizes matching initialization parameters (typically 10-20ms of audio)

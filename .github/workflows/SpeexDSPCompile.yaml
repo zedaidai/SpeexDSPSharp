@@ -244,9 +244,9 @@ jobs:
           export TARGET=x86_64-linux-android
           export API=21
           export AR=$TOOLCHAIN/bin/llvm-ar
-          export CC="$TOOLCHAIN/bin/clang --target=$TARGET$API"
+          export CC="$TOOLCHAIN/bin/clang --target=$TARGET$API -Wl,-z,max-page-size=16384 -D__BIONIC_NO_PAGE_SIZE_MACRO"
           export AS=$CC
-          export CXX="$TOOLCHAIN/bin/clang++ --target=$TARGET$API"
+          export CXX="$TOOLCHAIN/bin/clang++ --target=$TARGET$API -Wl,-z,max-page-size=16384 -D__BIONIC_NO_PAGE_SIZE_MACRO"
           export LD=$TOOLCHAIN/bin/ld
           export RANLIB=$TOOLCHAIN/bin/llvm-ranlib
           export STRIP=$TOOLCHAIN/bin/llvm-strip
@@ -322,9 +322,9 @@ jobs:
           export TARGET=aarch64-linux-android
           export API=21
           export AR=$TOOLCHAIN/bin/llvm-ar
-          export CC="$TOOLCHAIN/bin/clang --target=$TARGET$API"
+          export CC="$TOOLCHAIN/bin/clang --target=$TARGET$API -Wl,-z,max-page-size=16384 -D__BIONIC_NO_PAGE_SIZE_MACRO"
           export AS=$CC
-          export CXX="$TOOLCHAIN/bin/clang++ --target=$TARGET$API"
+          export CXX="$TOOLCHAIN/bin/clang++ --target=$TARGET$API -Wl,-z,max-page-size=16384 -D__BIONIC_NO_PAGE_SIZE_MACRO"
           export LD=$TOOLCHAIN/bin/ld
           export RANLIB=$TOOLCHAIN/bin/llvm-ranlib
           export STRIP=$TOOLCHAIN/bin/llvm-strip
